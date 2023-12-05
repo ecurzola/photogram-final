@@ -1,0 +1,122 @@
+<div>
+  <div>
+    <h1>
+      <%= @the_user.username %>
+    </h1>
+
+    <dl>
+  <dt>Private</dt>
+  <dd><%= @the_user.private %></dd>
+
+  <dt>Followers</dt>
+  <dd>
+    <!-- Enter association with FollowRequest Followers -->
+    <% followers = @the_user.received_follow_requests.where(status: 'accepted') %>
+    <%= followers.count %>
+
+    </div>
+
+      <h4>Pending follow requests</h4>
+
+      <ul>
+          <li>
+            <!-- Create a loop to list all pending follow requests -->
+
+
+            <!-- <form action="/modify_follow_request/2355" method="post">
+              <input name="query_status" value="accepted" type="hidden">
+
+              <button>
+                Accept
+              </button>
+            </form>
+
+            <form action="/modify_follow_request/2355" method="post">
+              <input name="query_status" value="rejected" type="hidden">
+            
+              <button>
+                Reject
+              </button>
+            </form>
+          -->
+          </li>
+      </ul>
+  </dd>
+
+  <dt>Following</dt>
+  <dd><!-- Enter association with FollowRequest Following --></dd>
+</dl>
+
+<nav>
+  <ul>
+    <li>
+      <a href="/users/<%= @the_user.username %>">Profile</a>
+    </li>
+    <li>
+      <a href="/users/<%= @the_user.username %>/liked_photos">Liked photos</a>
+    </li>
+    <li>
+      <a href="/users/<%= @the_user.username %>/feed">Feed</a>
+    </li>
+    <li>
+      <a href="/users/<%= @the_user.username %>/discover">Discover</a>
+    </li>
+  </ul>
+</nav>
+
+<h2>Own photos (<!-- Enter association with Photo and count -->)</h2>
+
+<table border="1">
+  <tr>
+    <th>
+      Image
+    </th>
+
+    <th>
+      Owner
+    </th>
+
+    <th>
+      Caption
+    </th>
+
+    <th>
+      Posted
+    </th>
+
+    <th>
+      Likes
+    </th>
+
+    <th></th>
+  </tr>
+
+<!-- Create loop and Enter association with Photo
+  <tr>
+    <td>
+      <img src="http://res-1.cloudinary.com/dt1gn6erd/image/upload/v1701757061/ar4bwmktcazeircyorub.jpg" class="img-responsive">
+    </td>
+
+    <td>
+      anisa
+    </td>
+
+    <td>
+      Booth Pic
+    </td>
+
+    <td>
+      4 minutes ago
+    </td>
+
+    <td>
+      
+    </td>
+
+    <td>
+      <a href="/photos/951">
+        Show details
+      </a>
+    </td>
+  </tr> -->
+</table>

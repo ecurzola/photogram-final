@@ -25,4 +25,7 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
+
+has_many(:received_follow_requests, class_name: "FollowRequest", foreign_key: "recipient_id")
+
 end
