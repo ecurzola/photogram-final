@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+
+  root to: "users#index"
+
   # Routes for the Like resource:
 
   # CREATE
