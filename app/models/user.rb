@@ -28,4 +28,8 @@ class User < ApplicationRecord
 
 has_many(:received_follow_requests, class_name: "FollowRequest", foreign_key: "recipient_id")
 
+has_many(:sent_follow_requests, class_name: "FollowRequest", foreign_key: "sender_id")
+
+has_many(:owned_photos, class_name: "Photo", foreign_key: "owner_id")
+
 end

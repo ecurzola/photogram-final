@@ -11,19 +11,22 @@
   <dt>Followers</dt>
   <dd>
     <!-- Enter association with FollowRequest Followers -->
-    <% followers = @the_user.received_follow_requests.where(status: 'accepted') %>
-    <%= followers.count %>
+    <% accepted_followers = @the_user.received_follow_requests.where(status: 'accepted') %>
+    <%= accepted_followers.count %>
 
     </div>
 
       <h4>Pending follow requests</h4>
 
       <ul>
-          <li>
-            <!-- Create a loop to list all pending follow requests -->
-
-
-            <!-- <form action="/modify_follow_request/2355" method="post">
+            <% pending_followers = @the_user.received_follow_requests.where(status: 'pending') %>
+            <% pending_followers.each do |pending| %>
+            <% pending_follower_id = pending.sender_id  %>
+            <% matching_record = User.where(:id => pending_follower_id) %>
+            <li>
+            <%= matching_record.first.username %>
+            
+            <form action="/modify_follow_request/<%= pending.id%>" method="post">
               <input name="query_status" value="accepted" type="hidden">
 
               <button>
@@ -31,20 +34,26 @@
               </button>
             </form>
 
-            <form action="/modify_follow_request/2355" method="post">
+            <form action="/modify_follow_request/<%= pending.id%>" method="post">
               <input name="query_status" value="rejected" type="hidden">
             
               <button>
                 Reject
               </button>
             </form>
-          -->
-          </li>
+
+            </li>
+            <% end %>            
+         
       </ul>
   </dd>
 
   <dt>Following</dt>
-  <dd><!-- Enter association with FollowRequest Following --></dd>
+  <dd>
+  <!-- Enter association with FollowRequest Following -->
+    <% accepted_following = @the_user.sent_follow_requests.where(status: 'accepted') %>
+    <%= accepted_following.count %>
+  </dd>
 </dl>
 
 <nav>
@@ -64,7 +73,7 @@
   </ul>
 </nav>
 
-<h2>Own photos (<!-- Enter association with Photo and count -->)</h2>
+<h2>Own photos (<% owned_photos = @the_user.owned_photos %><%= owned_photos.count %>)</h2>
 
 <table border="1">
   <tr>
@@ -91,32 +100,36 @@
     <th></th>
   </tr>
 
-<!-- Create loop and Enter association with Photo
+  <% owned_photos = @the_user.owned_photos %>
+  <% owned_photos.each do |photo|%>
+    
   <tr>
-    <td>
-      <img src="http://res-1.cloudinary.com/dt1gn6erd/image/upload/v1701757061/ar4bwmktcazeircyorub.jpg" class="img-responsive">
+      <td>
+      <img src="<%= photo.image %>" class="img-responsive">
     </td>
 
     <td>
-      anisa
+      <%= @the_user.username %>
     </td>
 
     <td>
-      Booth Pic
+      <%= photo.caption %>
     </td>
 
     <td>
-      4 minutes ago
+      <%= time_ago_in_words(photo.created_at) %> ago
     </td>
 
     <td>
-      
+    <% likes = photo.likes %>
+    <%= likes.count %>
     </td>
 
     <td>
-      <a href="/photos/951">
+      <a href="/photos/<%= photo.id %>">
         Show details
       </a>
     </td>
-  </tr> -->
+  </tr>
+  <% end%>
 </table>
