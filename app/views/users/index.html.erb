@@ -19,6 +19,7 @@
         </th>
 
         <th>
+        
         </th>
 
         <th>
@@ -40,7 +41,32 @@
         </td>
 
         <td>
-          
+        <% if current_user != nil %>
+        
+        <% if FollowRequest.where(recipient_id: user.id, sender_id: current_user.id, status: 'accepted').exists? %>
+        <% follow_request_accepted = FollowRequest.where(recipient_id: user.id, sender_id: current_user.id, status: 'accepted').first %>
+         <a href="/delete_follow_request/<%=follow_request_accepted.id%>">
+            Unfollow
+         </a>       
+        
+        <% elsif FollowRequest.where(recipient_id: user.id, sender_id: current_user.id, status: 'pending').exists? %>
+        <% follow_request_pending = FollowRequest.where(recipient_id: user.id, sender_id: current_user.id, status: 'pending').first %>
+          Request sent.
+          <a href="/delete_follow_request/<%=follow_request_pending.id%>">
+              Cancel
+          </a>
+        <% else %>
+
+          <form action="/insert_follow_request" method="post">
+              <input type="hidden" name="query_recipient_id" value="<%= user.id %>">
+          <button>
+            Follow
+          </button>
+                  
+        <% end %>  
+     
+        <% else %>
+        <% end %>
         </td>
 
         <td>
