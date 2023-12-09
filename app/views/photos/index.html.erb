@@ -1,7 +1,7 @@
 <div>
   <div>
     <h1>
-      List of all photos
+      List of photos
     </h1>
   </div>
 </div>
@@ -56,19 +56,20 @@
       </div>
 
       <button>
-        Create photo
+        Add photo
       </button>
     </form>
   </div>
 </div>
 
 <hr>
+
 <div>
   <div>
     <table border="1">
       <tr>
         <th>
-          ID
+          Image
         </th>
 
         <th>
@@ -76,37 +77,28 @@
         </th>
 
         <th>
-          Comments count
-        </th>
-
-        <th>
-          Image
-        </th>
-
-        <th>
-          Likes count
-        </th>
-
-        <th>
           Owner
         </th>
 
         <th>
-          Created at
+          Posted
         </th>
 
         <th>
-          Updated at
+          Likes
         </th>
-
+        
         <th>
         </th>
       </tr>
 
       <% @list_of_photos.each do |a_photo| %>
+      
+      <% if a_photo.photo_owner.private == false %>
+      
       <tr>
         <td>
-          <%= a_photo.id %>
+          <img src="<%= a_photo.image %>" class="img-responsive">
         </td>
 
         <td>
@@ -114,34 +106,26 @@
         </td>
 
         <td>
-          <%= a_photo.comments_count %>
+          <%= a_photo.photo_owner.username %>
         </td>
 
         <td>
-          <%= a_photo.image %>
+          <%= time_ago_in_words(a_photo.created_at) %>
         </td>
 
         <td>
           <%= a_photo.likes_count %>
         </td>
-
-        <td>
-          <%= a_photo.owner_id %>
-        </td>
-
-        <td>
-          <%= time_ago_in_words(a_photo.created_at) %> ago
-        </td>
-        <td>
-          <%= time_ago_in_words(a_photo.updated_at) %> ago
-        </td>
-
+        
         <td>
           <a href="/photos/<%= a_photo.id %>">
             Show details
           </a>
         </td>
       </tr>
+      <% else %>
+      
+      <% end %>
       <% end %>
     </table>
   </div>

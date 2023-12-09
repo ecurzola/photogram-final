@@ -15,4 +15,6 @@ class Photo < ApplicationRecord
 
 has_many(:likes, class_name: "Like", foreign_key: "photo_id")
 
+belongs_to(:photo_owner, class_name: "User", foreign_key: "owner_id", required: true)
+
 end
