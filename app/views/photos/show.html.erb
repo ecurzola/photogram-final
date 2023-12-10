@@ -1,24 +1,17 @@
 <div>
   <div>
     <h1>
-      Photo #<%= @the_photo.id %> details
+      Photo details
     </h1>
 
-    <div>
-      <div>
-        <a href="/photos">
-          Go back
-        </a>
-      </div>
-
-      <div>
-        <a href="/delete_photo/<%= @the_photo.id %>">
-          Delete photo
-        </a>
-      </div>
-    </div>
-
     <dl>
+      <dt>
+        Image
+      </dt>
+      <dd>
+        <img src="<%= @the_photo.image %>" class="img-responsive">
+      </dd>
+
       <dt>
         Caption
       </dt>
@@ -27,31 +20,10 @@
       </dd>
 
       <dt>
-        Comments count
-      </dt>
-      <dd>
-        <%= @the_photo.comments_count %>
-      </dd>
-
-      <dt>
-        Image
-      </dt>
-      <dd>
-        <%= @the_photo.image %>
-      </dd>
-
-      <dt>
-        Likes count
-      </dt>
-      <dd>
-        <%= @the_photo.likes_count %>
-      </dd>
-
-      <dt>
         Owner
       </dt>
       <dd>
-        <%= @the_photo.owner_id %>
+        <%= @the_photo.photo_owner.username %>
       </dd>
 
       <dt>
@@ -62,12 +34,30 @@
       </dd>
 
       <dt>
-        Updated at
+        Likes count
       </dt>
       <dd>
-        <%= time_ago_in_words(@the_photo.updated_at) %> ago
+        <%= @the_photo.likes_count %>
       </dd>
+
+      <dt>
+        Comments count
+      </dt>
+      <dd>
+        <%= @the_photo.comments_count %>
+      </dd>
+
+      <dt>
+        Add a fan
+      </dt>
+      <dd>
+      
+      </dd>
+
+
+
     </dl>
+
   </div>
 </div>
 
@@ -127,5 +117,35 @@
     </form>
   </div>
 </div>
+
+<hr>
+
+<h2>Comments</h2>
+
+<table>
+  <tr>
+    <th>Commenter</th>
+    <th>Comment</th>
+    <th>Posted</th>
+  </tr>
+
+<% comments = @the_photo.comments %>
+<% comments.each do |comment| %>
+    <tr>
+      <td>
+        <% user = comment.author_id%>
+        <%= User.where(id: user).first.username %>
+
+      </td>
+
+      <td>
+        <%= comment.body%>
+      </td>
+
+      <td>
+        <%= time_ago_in_words(comment.created_at) %>
+      </td>
+    </tr>  
+<% end%>
 
 <hr>
